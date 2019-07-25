@@ -74,7 +74,11 @@ public class Persona {
 			this.bCasado = bCasado;
 		}
 
-
+		//Metodos de la clase object
+		@Override
+		public String toString() {
+			return 
+		}
 
 		
 		
