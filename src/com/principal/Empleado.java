@@ -1,6 +1,6 @@
 package com.principal;
 
-public class Empleado extends Persona { //Herencia con Persona
+public abstract class Empleado extends Persona { //Herencia con Persona
 
 	//Propiedades
 	private String idPersonal;
@@ -61,4 +61,21 @@ public class Empleado extends Persona { //Herencia con Persona
 		System.out.println("Este es el metodo pintar de la clase de Empleado");
 		System.out.println(super.toString() + ", " + idPersonal + ", " + sueldo);
 	}
+	
+	
+	public abstract double calcularAntiguedadMensual();
+	public abstract double calcularComplementosMensuales();
+	
+	public double calcularSueldoBrutoMensual() {
+		double resultado;
+		
+		resultado = sueldo + calcularComplementosMensuales() + calcularAntiguedadMensual();
+		
+		return resultado;
+	}
+	
+	public void inctoSueldo(double porcentaje) {
+		setSueldo((float)(sueldo * porcentaje) / 100);
+	}
+	
 }
