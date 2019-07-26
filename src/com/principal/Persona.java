@@ -85,7 +85,7 @@ public class Persona {
 		@Override
 		//Se sobreescribe de la clase padre (Object)
 		public boolean equals(Object obj) {
-			boolean res = false; //Si todo falla el objeto devuelve null
+			boolean res = false; //Si todo falla el objeto devuelve false
 			
 			if(this == obj) { //Hay que comprobar que el objeto que es llamado (this) no es la misma que la introducida por parametros (obj)
 				res = true;
