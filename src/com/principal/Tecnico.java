@@ -1,4 +1,4 @@
-package com.casoPractico3;
+package com.principal;
 
 public class Tecnico extends Empleado{
 	//Propiedades

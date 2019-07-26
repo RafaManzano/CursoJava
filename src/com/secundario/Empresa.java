@@ -1,6 +1,6 @@
 package com.secundario;
 
-import com.casoPractico3.Empleado;
+import com.principal.Empleado;
 
 import Funcionalidades.Metodos;
 

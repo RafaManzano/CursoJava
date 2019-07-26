@@ -2,9 +2,9 @@ package Funcionalidades;
 
 import java.util.Random;
 
-import com.casoPractico3.Empleado;
-import com.casoPractico3.Obrero;
-import com.casoPractico3.Tecnico;
+import com.principal.Empleado;
+import com.principal.Obrero;
+import com.principal.Tecnico;
 
 public class Metodos {
 
