@@ -30,6 +30,7 @@ public class Empleado extends Persona { //Herencia con Persona
 		super(nombre, edad, sexo, dni, bCasado);
 		this.idPersonal = idPersonal;
 		this.sueldo = sueldo;
+		
 	}
 
 	//Get and Set
