@@ -1,6 +1,6 @@
 package com.casoPractico3;
 
-public class Obrero extends Empleado {
+public final class Obrero extends Empleado {
 	//Propiedades
 	private int trienio;
 	private TipoTurno turno;
