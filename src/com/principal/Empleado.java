@@ -1,5 +1,10 @@
 package com.principal;
 
+/**
+ * 
+ * @author Rafael Manzano Medina
+ *
+ */
 public abstract class Empleado extends Persona { //Herencia con Persona
 
 	//Propiedades
