@@ -1,6 +1,7 @@
 package com.principal;
 
 import java.beans.FeatureDescriptor;
+import java.security.cert.CollectionCertStoreParameters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,7 +9,10 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -56,13 +60,41 @@ public class MainCP3 {
 		List<Vuelo> vueloDemoradoMas1Dia = listaVuelo.stream()
 				.filter(v -> ChronoUnit.DAYS.between(v.getFechaYHoraSalida(), v.getFechaYHoraLlegada()) > 1)
 				.collect(Collectors.toList());
-		System.out.println(vueloDemoradoMas1Dia);
+		//System.out.println(vueloDemoradoMas1Dia);
 		
-		//5. Obtener una colecciÃ³n que almacene un listado de pasajeros agrupado por el destino del vuelo.
+		//5. Obtener una coleccion que almacene un listado de pasajeros agrupado por el destino del vuelo
 		/*
 		Map<String, List<Pasajero>> pasajerosPorDestino = listaVuelo.stream()
-				.collect(Collectors.groupingBy(Vuelo::getDestino, Collectors.Vuelo::getPasajero));
-		 */
+				.collect(Collectors.groupingBy(Vuelo::getDestino, Collectors.mapping()));
+		*/		
+		//System.out.println(pasajerosPorDestino);
+		
+		//6. Crear una colección que almacene los vuelos que están programados para salir en la semana
+		//próxima, es decir, dentro de 7 días
+		List<Vuelo> vuelosEnUnaSemana = listaVuelo.stream()
+				.filter(v -> ChronoUnit.DAYS.between(v.getFechaYHoraSalida(), LocalDateTime.of(2019, Month.AUGUST, 15, 0, 0)) < 7)
+				.collect(Collectors.toList());
+		//System.out.println(vuelosEnUnaSemana);
+		
+		//7. Crear una colección que almacene los pasajeros, por el sexo y la edad del pasajero
+		List<Pasajero> listaOrdenadaSE = listaPasajero;
+		Collections.sort(listaOrdenadaSE);
+		//System.out.println(listaOrdenadaSE);
+		
+		//8. Mostrar la colección anterior ordenada por el nombre y los apellidos de los pasajeros en orden
+		//natural.
+		List<Pasajero> listaOrdenadaNA = listaOrdenadaSE;
+		Collections.sort(listaOrdenadaNA);
+		//System.out.println(listaOrdenadaNA);
+		
+		//9. Mostrar la colección del punto 7 ordenada en orden alfabético inverso por el primer apellido.
+		Collections.sort(listaOrdenadaSE, (e1,e2) -> e2.getPrimerApellido().compareTo(e1.getPrimerApellido()));
+		System.out.println(listaOrdenadaSE);
+		
+		//10. Obtener una colección que almacene el nombre y el apellido de los pasajeros, agrupado por las
+		//horas de duración de su viaje
+		Map<Integer, List<Pasajero>> horasPasajeros = listaVuelo.stream();
+		
 	}
 
 }

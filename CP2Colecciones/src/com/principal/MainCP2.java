@@ -73,7 +73,7 @@ public class MainCP2 {
 		//los estudiantes que estudian en la Sesión de la mañana, en orden alfabético inverso.
 		for(Map.Entry<TipoSesion, List<Estudiante>> entry : estudiantesPorSesionDeInformatica.entrySet()) {
 			List<Estudiante> listaOrdenada = entry.getValue();
-			 Collections.sort(listaOrdenada, (e1,e2) -> e2.compareTo(e1));
+			Collections.sort(listaOrdenada, (e1,e2) -> e2.compareTo(e1));
 			for(Estudiante e: listaOrdenada) {
 				System.out.println(e.toString());
 			}
