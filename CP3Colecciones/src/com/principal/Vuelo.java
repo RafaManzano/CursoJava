@@ -1,10 +1,11 @@
 package com.principal;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vuelo {
+public class Vuelo implements Comparable <Vuelo>{
 
 	private String destino;
 	private Double precio;
@@ -116,7 +117,20 @@ public class Vuelo {
 				+ ", " + fechaYHoraLlegada + ", " + numeroPlazas;
 	}
 	
+	public Long tiempoTranscurrido() {
+		Long tiempo;
+		
+		tiempo = ChronoUnit.HOURS.between(this.getFechaYHoraLlegada(), this.getFechaYHoraSalida());
+		return tiempo;
+	}
+
+
+
+	@Override
+	public int compareTo(Vuelo o) {
+		return this.tiempoTranscurrido().compareTo(o.tiempoTranscurrido());
+	}
 	
-	
+	public 
 	
 }

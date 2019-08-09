@@ -1,11 +1,8 @@
 package com.principal;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
-import javax.print.attribute.standard.Chromaticity;
-
-public class Pasajero implements Comparable<Pasajero> {
+public class Pasajero implements Comparable<Pasajero>{
 
 	private String nombre;
 	private String primerApellido;
@@ -89,7 +86,7 @@ public class Pasajero implements Comparable<Pasajero> {
 		return nombre + ", " + primerApellido + ", "
 				+ segundoApellido;
 	}
-
+	
 	/*
 	@Override
 	public int compareTo(Pasajero e2) {

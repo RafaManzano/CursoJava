@@ -1,24 +1,22 @@
 package com.principal;
 
-import java.beans.FeatureDescriptor;
-import java.security.cert.CollectionCertStoreParameters;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BinaryOperator;
-import java.util.stream.Collector;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class MainCP3 {
 
 	public static void main(String[] args) {
+		
 		List<Pasajero> listaPasajero = new ArrayList<>();
 		listaPasajero.add(new Pasajero("Rafael", "Manzano", "Medina", LocalDate.of(1995, Month.JUNE, 23), TipoSexo.HOMBRE));
 		listaPasajero.add(new Pasajero("Enriqueta", "Acevedo", "Ibarra", LocalDate.of(1980, Month.JANUARY, 23), TipoSexo.MUJER));
@@ -28,15 +26,31 @@ public class MainCP3 {
 		listaPasajero.add(new Pasajero("Jose Israel", "Perez", "Abrines", LocalDate.of(1962, Month.DECEMBER, 25), TipoSexo.HOMBRE));
 		listaPasajero.add(new Pasajero("Cristina", "Camacho", "Navarro", LocalDate.of(1978, Month.MARCH, 23), TipoSexo.MUJER));
 		listaPasajero.add(new Pasajero("Hugo", "Navarro", "Llull", LocalDate.of(2002, Month.NOVEMBER, 15), TipoSexo.HOMBRE));
+		
 		//listaPasajero.add(new Pasajero("Arturo", "Mendoza", "Benji", LocalDate.of(1995, Month.JUNE, 23), TipoSexo.HOMBRE));
 		//System.out.println(listaPasajero);
 		
-		List<Vuelo> listaVuelo = new ArrayList<>();
-		listaVuelo.add(new Vuelo("Madrid", 35.20, LocalDateTime.now(), LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 35)), 3, new ArrayList<>(Arrays.asList(listaPasajero.get(0), listaPasajero.get(1), listaPasajero.get(2)))));
-		listaVuelo.add(new Vuelo("Cuba", 1200.25, LocalDateTime.now(), LocalDateTime.of(LocalDate.of(2019, Month.AUGUST,9), LocalTime.of(3, 25)), 3, new ArrayList<>(Arrays.asList(listaPasajero.get(3), listaPasajero.get(4), listaPasajero.get(5)))));
-		listaVuelo.add(new Vuelo("Estocolmo", 150.10, LocalDateTime.of(LocalDate.of(2019,Month.AUGUST,6), LocalTime.of(7,0)), LocalDateTime.of(LocalDate.now(), LocalTime.now()), 2, new ArrayList<>(Arrays.asList(listaPasajero.get(6), listaPasajero.get(7)))));
+		List<Pasajero> pasajeroMadrid = new ArrayList<Pasajero>();
+		pasajeroMadrid.add(new Pasajero("Rafael", "Manzano", "Medina", LocalDate.of(1995, Month.JUNE, 23), TipoSexo.HOMBRE));
+		pasajeroMadrid.add(new Pasajero("Enriqueta", "Acevedo", "Ibarra", LocalDate.of(1980, Month.JANUARY, 23), TipoSexo.MUJER));
+		pasajeroMadrid.add(new Pasajero("Carolina", "Acosta", "Garbajosa", LocalDate.of(2000, Month.MAY, 10), TipoSexo.MUJER));
 		
-		//System.out.println(listaVuelo);
+		List<Pasajero> pasajeroCuba = new ArrayList<Pasajero>();
+		pasajeroMadrid.add(new Pasajero("Jose", "Alarcon", "Gasol", LocalDate.of(1972, Month.SEPTEMBER, 2), TipoSexo.HOMBRE));
+		pasajeroMadrid.add(new Pasajero("Hipolito", "Lopez", "Yelotro", LocalDate.of(1995, Month.APRIL, 11), TipoSexo.HOMBRE));
+		pasajeroMadrid.add(new Pasajero("Jose Israel", "Perez", "Abrines", LocalDate.of(1962, Month.DECEMBER, 25), TipoSexo.HOMBRE));
+		
+		List<Pasajero> pasajeroEstocolmo = new ArrayList<Pasajero>();
+		pasajeroEstocolmo.add(new Pasajero("Cristina", "Camacho", "Navarro", LocalDate.of(1978, Month.MARCH, 23), TipoSexo.MUJER));
+		pasajeroEstocolmo.add(new Pasajero("Hugo", "Navarro", "Llull", LocalDate.of(2002, Month.NOVEMBER, 15), TipoSexo.HOMBRE));
+		
+		
+		List<Vuelo> listaVuelo = new ArrayList<>();
+		listaVuelo.add(new Vuelo("Madrid", 35.20, LocalDateTime.now(), LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 35)), 3, pasajeroMadrid));
+		listaVuelo.add(new Vuelo("Cuba", 1200.25, LocalDateTime.now(), LocalDateTime.of(LocalDate.of(2019, Month.AUGUST,9), LocalTime.of(3, 25)), 3, pasajeroCuba));
+		listaVuelo.add(new Vuelo("Estocolmo", 150.10, LocalDateTime.of(LocalDate.of(2019,Month.AUGUST,6), LocalTime.of(7,0)), LocalDateTime.of(LocalDate.now(), LocalTime.now()), 2, pasajeroEstocolmo));
+		
+		System.out.println(listaVuelo);
 		
 		//1. Obtener un listado de los vuelos que tienen el numero de plazas completo
 		List<Vuelo> vuelosCompletos = listaVuelo.stream()
@@ -60,40 +74,90 @@ public class MainCP3 {
 		List<Vuelo> vueloDemoradoMas1Dia = listaVuelo.stream()
 				.filter(v -> ChronoUnit.DAYS.between(v.getFechaYHoraSalida(), v.getFechaYHoraLlegada()) > 1)
 				.collect(Collectors.toList());
-		//System.out.println(vueloDemoradoMas1Dia);
+		System.out.println(vueloDemoradoMas1Dia);
 		
-		//5. Obtener una coleccion que almacene un listado de pasajeros agrupado por el destino del vuelo
-		/*
-		Map<String, List<Pasajero>> pasajerosPorDestino = listaVuelo.stream()
-				.collect(Collectors.groupingBy(Vuelo::getDestino, Collectors.mapping()));
-		*/		
-		//System.out.println(pasajerosPorDestino);
+		//5. Obtener una colecci贸n que almacene un listado de pasajeros agrupado por el destino del vuelo.
 		
-		//6. Crear una colecci髇 que almacene los vuelos que est醤 programados para salir en la semana
-		//pr髕ima, es decir, dentro de 7 d韆s
+		Map<String, List<List<Pasajero>>> pasajerosPorDestino = listaVuelo.stream()
+				.collect(Collectors.groupingBy(Vuelo::getDestino, Collectors.mapping(Vuelo::getPasajero, Collectors.toList())));
+		System.out.println(pasajerosPorDestino);
+		 
+		
+		//6. Crear una colecci贸n que almacene los vuelos que est谩n programados para salir en la semana
+		//pr贸xima, es decir, dentro de 7 d铆as
 		List<Vuelo> vuelosEnUnaSemana = listaVuelo.stream()
 				.filter(v -> ChronoUnit.DAYS.between(v.getFechaYHoraSalida(), LocalDateTime.of(2019, Month.AUGUST, 15, 0, 0)) < 7)
 				.collect(Collectors.toList());
 		//System.out.println(vuelosEnUnaSemana);
 		
-		//7. Crear una colecci髇 que almacene los pasajeros, por el sexo y la edad del pasajero
+		//7. Crear una colecci贸n que almacene los pasajeros, por el sexo y la edad del pasajero
 		List<Pasajero> listaOrdenadaSE = listaPasajero;
 		Collections.sort(listaOrdenadaSE);
 		//System.out.println(listaOrdenadaSE);
 		
-		//8. Mostrar la colecci髇 anterior ordenada por el nombre y los apellidos de los pasajeros en orden
+		//8. Mostrar la colecci贸n anterior ordenada por el nombre y los apellidos de los pasajeros en orden
 		//natural.
 		List<Pasajero> listaOrdenadaNA = listaOrdenadaSE;
 		Collections.sort(listaOrdenadaNA);
 		//System.out.println(listaOrdenadaNA);
 		
-		//9. Mostrar la colecci髇 del punto 7 ordenada en orden alfab閠ico inverso por el primer apellido.
+		//9. Mostrar la colecci贸n del punto 7 ordenada en orden alfab茅tico inverso por el primer apellido.
 		Collections.sort(listaOrdenadaSE, (e1,e2) -> e2.getPrimerApellido().compareTo(e1.getPrimerApellido()));
 		System.out.println(listaOrdenadaSE);
 		
-		//10. Obtener una colecci髇 que almacene el nombre y el apellido de los pasajeros, agrupado por las
-		//horas de duraci髇 de su viaje
-		Map<Integer, List<Pasajero>> horasPasajeros = listaVuelo.stream();
+		//10. Obtener una colecci贸n que almacene el nombre y el apellido de los pasajeros, agrupado por las
+		//horas de duraci贸n de su viaje
+		
+		/*
+		Map<Long, String> horasPasajeros = listaVuelo.stream()
+				.collect(Collectors.groupingBy(Vuelo::tiempoTranscurrido, Collectors.mapping(Vuelo::getPasajero, Collectors.toList().toString())));
+		*/
+		
+		//listaVuelo.stream().collect(Collectors.toMap(Vuelo::tiempoTranscurrido, Collectors.mapping(Vuelo::getPasajero, downstream)));
+		
+		Map<Long, List<String>> nombrePasajeroHoras = new TreeMap<>();
+		
+		for(Vuelo v: listaVuelo) {
+			List<Pasajero> p = v.getPasajero();
+			Long tiempo = v.tiempoTranscurrido();
+			List<String> s = new ArrayList<>();
+			
+			for(Pasajero pj : p) {
+				s.add(pj.toString());
+			}
+			nombrePasajeroHoras.put(tiempo, s);
+		}
+		
+		//11. Mostrar el listado de pasajeros ordenado de mayor a menor por la duraci贸n del viaje
+		Map<Long, List<String>> nombrePasajeroHorasInvertido = new TreeMap<>((e1,e2) -> e2.compareTo(e1));
+		nombrePasajeroHorasInvertido.putAll(nombrePasajeroHoras);
+		
+		System.out.println(nombrePasajeroHorasInvertido);
+		
+		//12. Enviar un mensaje a los pasajeros cuyo vuelo saldr谩 en las pr贸ximas 3 horas.
+		listaVuelo.stream()
+		.filter(e -> ChronoUnit.HOURS.between(e.getFechaYHoraLlegada().toLocalTime(), LocalTime.now()) < 3)
+		.forEach(e -> System.out.println("El vuelo con destino " + e.getDestino() + " sale en menos de 3h"));
+		
+		//13. Enviar un mensaje a los pasajeros cuyo vuelo saldr谩 en los pr贸ximos 3 d铆as
+		listaVuelo.stream()
+		.filter(e -> Duration.between(e.getFechaYHoraLlegada().toLocalDate(), LocalDate.now()).toHours() < 3)
+		.forEach(e -> System.out.println("El vuelo con destino " + e.getDestino() + " sale en menos de 3 dias"));
+		
+		//14. Crear una colecci贸n que almacene el listado de pasajeros agrupado por el d铆a en que tiene lugar su
+		//vuelo, considerando que el vuelo tiene lugar en el mes en curso. Al mostrar la colecci贸n
+		//resultante, mostrar el nombre del d铆a de la semana en espa帽ol.
+		/*
+		Map<Object, List<List<Pasajero>>>  diaVuelo = listaVuelo.stream()
+		.filter(e -> ChronoUnit.MONTHS.between(e.getFechaYHoraLlegada(), LocalDate.now()) == 0)
+		.collect(Collectors.groupingBy(Vuelo::obtenerDia));
+		
+		System.out.println(diaVuelo);
+		*/
+		//15. Crear una colecci贸n de los vuelos que no est谩n previstos para el mes en curso y mostrar el
+		//nombre del mes para el cual esta prevista su fecha de salida, en espa帽ol.
+		
+		
 		
 	}
 

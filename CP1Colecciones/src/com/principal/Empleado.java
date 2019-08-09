@@ -162,10 +162,14 @@ public class Empleado implements Comparable<Empleado>{
 	}
 
 
-
+	
 	@Override
 	public int compareTo(Empleado o) {
 		return this.getSalario().compareTo(o.getSalario());
+	}
+	
+	public void pintarEmpleado() {
+		System.out.println(getNombre() + ", " + getCorreo() + ", " + getFechaAlta());
 	}
 	
 	
